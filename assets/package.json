@@ -17,12 +17,12 @@
       }
     },
     "importmap": {
-      "@hotwired/stimulus": "^3.1.0",
-      "simple-datatables": "^9.0.4"
+      "@hotwired/stimulus": "^3.2.2",
+      "simple-datatables": "^9.2.2"
     }
   },
   "peerDependencies": {
-    "@hotwired/stimulus": "^3.1.0",
-    "simple-datatables": "^9.0.4"
+    "@hotwired/stimulus": "^3.2.2",
+    "simple-datatables": "^9.2.2"
   }
 }
