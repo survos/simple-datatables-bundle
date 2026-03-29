@@ -20,6 +20,8 @@ class SurvosSimpleDatatablesBundle extends AbstractBundle
 {
     use HasAssetMapperTrait;
 
+    public const ASSET_NAMESPACE = '@survos/simple-datatables';
+
     /**
      * @param array<mixed> $config
      */
@@ -59,12 +61,5 @@ class SurvosSimpleDatatablesBundle extends AbstractBundle
             ->end();
 
         ;
-    }
-
-    public function getPaths(): array
-    {
-        $dir = realpath(__DIR__ . '/../assets/');
-        assert(file_exists($dir), 'asset path must exist for the assets in ' . __DIR__);
-        return [$dir => '@survos/simple-datatables'];
     }
 }
