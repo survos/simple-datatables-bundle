@@ -2,6 +2,7 @@
 
 namespace Survos\SimpleDatatables;
 
+use Survos\CoreBundle\HasAssetMapperInterface;
 use Survos\CoreBundle\Traits\HasAssetMapperTrait;
 use Survos\SimpleDatatables\Components\SimpleDatatablesComponent;
 use Survos\SimpleDatatables\Components\ItemGridComponent;
@@ -16,7 +17,7 @@ use Symfony\UX\StimulusBundle\Twig\StimulusTwigExtension;
 use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Twig\Environment;
 
-class SurvosSimpleDatatablesBundle extends AbstractBundle
+class SurvosSimpleDatatablesBundle extends AbstractBundle implements HasAssetMapperInterface
 {
     use HasAssetMapperTrait;
 
