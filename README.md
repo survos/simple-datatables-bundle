@@ -11,7 +11,7 @@ composer req survos/simple-datatables-bundle
 To turn any HTML `<table>` into a datatable, simply add the stimulus controller to the tag:
 
 ```twig
-<table class="table" {{ stimulus_controller('@survos/simple-datatables-bundle/table', { perPage: 5, sortable: true }) }}>
+<table class="table" {{ stimulus_controller('@survos/simple-datatables/table', { perPage: 5, sortable: true }) }}>
 ```
 
 ## Twig Component: `simple_datatables`
@@ -96,7 +96,7 @@ For custom rendering, define a block named after the column’s `name`. The bloc
 ### Stimulus
 
 The wrapper `<div>` can be wired to a stimulus controller via `stimulusController`.
-By default it uses `@survos/grid-bundle/item_grid`.
+By default it uses `@survos/grid/item_grid`.
 
 ## Complete Project
 
@@ -113,7 +113,7 @@ cat > templates/simple.html.twig <<END
 {% extends 'base.html.twig' %}
 
 {% block body %}
-     <table class="table" {{ stimulus_controller('@survos/simple-datatables-bundle/table', {perPage: 5, sortable: true}) }}>
+     <table class="table" {{ stimulus_controller('@survos/simple-datatables/table', {perPage: 5, sortable: true}) }}>
         <thead>
         <tr>
             <th>abbr</th>

@@ -2,8 +2,7 @@
 
 namespace Survos\SimpleDatatables;
 
-use Survos\CoreBundle\HasAssetMapperInterface;
-use Survos\CoreBundle\Traits\HasAssetMapperTrait;
+use Survos\CoreBundle\Bundle\AssetMapperBundle;
 use Survos\SimpleDatatables\Components\SimpleDatatablesComponent;
 use Survos\SimpleDatatables\Components\ItemGridComponent;
 use Survos\SimpleDatatables\Twig\TwigExtension;
@@ -12,16 +11,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\UX\StimulusBundle\Twig\StimulusTwigExtension;
-use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Twig\Environment;
 
-class SurvosSimpleDatatablesBundle extends AbstractBundle implements HasAssetMapperInterface
+class SurvosSimpleDatatablesBundle extends AssetMapperBundle
 {
-    use HasAssetMapperTrait;
-
-    public const ASSET_NAMESPACE = '@survos/simple-datatables';
+    public const ASSET_PACKAGE = 'simple-datatables';
 
     /**
      * @param array<mixed> $config
@@ -55,7 +50,7 @@ class SurvosSimpleDatatablesBundle extends AbstractBundle implements HasAssetMap
         // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
-            ->scalarNode('stimulus_controller')->defaultValue('@survos/simple-datatables-bundle/table')->end()
+            ->scalarNode('stimulus_controller')->defaultValue('@survos/simple-datatables/table')->end()
             ->booleanNode('per_page')->defaultValue(10)->end()
             ->booleanNode('searchable')->defaultValue(true)->end()
             ->scalarNode('fixed_height')->defaultValue(true)->end()
