@@ -44,7 +44,7 @@ class SimpleDatatablesComponent
             'activate' => true,
             'tableId' => null,
             'remoteUrl' => null,
-            'stimulusController' => '@survos/simple-datatables/table',
+            'stimulusController' => $this->stimulusController,
             'search' => true,
             'condition' => true,
             'caller' => null,

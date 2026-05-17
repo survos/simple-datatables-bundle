@@ -50,7 +50,7 @@ class SurvosSimpleDatatablesBundle extends AssetMapperBundle
         // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
-            ->scalarNode('stimulus_controller')->defaultValue('@survos/simple-datatables/table')->end()
+            ->scalarNode('stimulus_controller')->defaultValue('@survos/simple-datatables-bundle/table')->end()
             ->booleanNode('per_page')->defaultValue(10)->end()
             ->booleanNode('searchable')->defaultValue(true)->end()
             ->scalarNode('fixed_height')->defaultValue(true)->end()
