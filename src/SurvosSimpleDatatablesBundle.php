@@ -2,19 +2,21 @@
 
 namespace Survos\SimpleDatatables;
 
-use Survos\CoreBundle\Bundle\AssetMapperBundle;
+use Survos\Kit\AbstractUxBundle;
+use Survos\Kit\SurvosKitBundle;
 use Survos\SimpleDatatables\Components\SimpleDatatablesComponent;
 use Survos\SimpleDatatables\Components\ItemGridComponent;
 use Survos\SimpleDatatables\Twig\TwigExtension;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\UX\StimulusBundle\Twig\StimulusTwigExtension;
 use Twig\Environment;
 
-class SurvosSimpleDatatablesBundle extends AssetMapperBundle
+#[RequiredBundle(SurvosKitBundle::class)]
+class SurvosSimpleDatatablesBundle extends AbstractUxBundle
 {
     public const ASSET_PACKAGE = 'simple-datatables';
 
@@ -23,6 +25,7 @@ class SurvosSimpleDatatablesBundle extends AssetMapperBundle
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+        parent::loadExtension($config, $container, $builder);
 
         if (class_exists(Environment::class) && class_exists(StimulusTwigExtension::class)) {
             $builder
