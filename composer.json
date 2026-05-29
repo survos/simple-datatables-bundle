@@ -15,7 +15,7 @@
     "type": "symfony-bundle",
     "require": {
         "php": "^8.4",
-        "survos/kit-bundle": "^2.0",
+        "survos/kit-bundle": "^2.5",
         "symfony/config": "^7.3||^8.0",
         "symfony/dependency-injection": "^7.3||^8.0",
         "symfony/http-kernel": "^7.3||^8.0",
@@ -33,7 +33,7 @@
         "symfony/phpunit-bridge": "^7.3||^8.0",
         "symfony/twig-bundle": "^7.3||^8.0",
         "symfony/var-dumper": "^7.3||^8.0",
-        "phpunit/phpunit": "^12"
+        "phpunit/phpunit": "^13.0"
     },
     "autoload": {
         "psr-4": {
