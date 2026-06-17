@@ -16,6 +16,7 @@ use Symfony\UX\StimulusBundle\Twig\StimulusTwigExtension;
 use Twig\Environment;
 
 #[RequiredBundle(SurvosKitBundle::class)]
+// Symfony\Component\HttpKernel\Bundle\Bundle <-- Flex auto-registration marker (see Survos\Kit\AbstractSurvosBundle)
 class SurvosSimpleDatatablesBundle extends AbstractUxBundle
 {
     public const ASSET_PACKAGE = 'simple-datatables';
