@@ -22,7 +22,7 @@
         "symfony/options-resolver": "^8.1",
         "symfony/stimulus-bundle": "^3",
         "symfony/ux-twig-component": "^3",
-        "twig/twig": "^3.4"
+        "twig/twig": "^3.4|^4.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.0",
