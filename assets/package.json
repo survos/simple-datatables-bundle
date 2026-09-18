@@ -1,5 +1,5 @@
 {
-  "name": "@survos/simple-datatables",
+  "name": "@survos/simple-datatables-bundle",
   "description": "integrate php and javascript helpers for Simple Datatables",
   "license": "MIT",
   "version": "1.0.4",
@@ -11,9 +11,14 @@
         "fetch": "lazy",
         "enabled": true,
         "autoimport": {
-          "@survos/simple-datatables/style.css": true
+          "@survos/simple-datatables-bundle/style.css": true
         }
-
+      },
+      "ux": {
+        "main": "src/controllers/ux_controller.js",
+        "webpackMode": "eager",
+        "fetch": "lazy",
+        "enabled": true
       }
     },
     "importmap": {

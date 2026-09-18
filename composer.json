@@ -20,9 +20,10 @@
         "symfony/dependency-injection": "^8.1",
         "symfony/http-kernel": "^8.1",
         "symfony/options-resolver": "^8.1",
-        "symfony/stimulus-bundle": "^3",
-        "symfony/ux-twig-component": "^3",
-        "twig/twig": "^3.4|^4.0"
+        "symfony/stimulus-bundle": "^2.32 || ^3.0",
+        "symfony/ux-twig-component": "^2.32 || ^3.0",
+        "twig/twig": "^3.4|^4.0",
+        "pentiminax/ux-datatables": "^1.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.0",

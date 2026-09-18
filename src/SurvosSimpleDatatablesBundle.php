@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Survos\SimpleDatatables;
 
 use Survos\Kit\AbstractUxBundle;
@@ -19,7 +21,6 @@ use Twig\Environment;
 // Symfony\Component\HttpKernel\Bundle\Bundle <-- Flex auto-registration marker (see Survos\Kit\AbstractSurvosBundle)
 class SurvosSimpleDatatablesBundle extends AbstractUxBundle
 {
-    public const ASSET_PACKAGE = 'simple-datatables';
 
     /**
      * @param array<mixed> $config
@@ -40,6 +41,7 @@ class SurvosSimpleDatatablesBundle extends AbstractUxBundle
             ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setArgument('$stimulusController', $config['stimulus_controller'])
+            ->setArgument('$backend', $config['backend'])
 //            ->setArgument('$registry', new Reference('doctrine')) // should be optional
         ;
 
@@ -54,8 +56,9 @@ class SurvosSimpleDatatablesBundle extends AbstractUxBundle
         // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
+            ->enumNode('backend')->values(['simple', 'ux'])->defaultValue('simple')->end()
             ->scalarNode('stimulus_controller')->defaultValue('@survos/simple-datatables-bundle/table')->end()
-            ->booleanNode('per_page')->defaultValue(10)->end()
+            ->integerNode('per_page')->min(1)->defaultValue(10)->end()
             ->booleanNode('searchable')->defaultValue(true)->end()
             ->scalarNode('fixed_height')->defaultValue(true)->end()
             ->end();

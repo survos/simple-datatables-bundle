@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Survos\SimpleDatatables\Components;
 
 use Survos\SimpleDatatables\Model\Column;
@@ -12,12 +14,13 @@ class SimpleDatatablesComponent
 {
     public function __construct(
         public string $stimulusController,
+        public string $backend = 'simple',
     )
     {
     }
 
     public ?iterable $data = null;
-    public array $columns;
+    public array $columns = [];
     public bool $search = true;
     public bool $trans = true;
     public string|bool|null $domain = null;
@@ -45,14 +48,50 @@ class SimpleDatatablesComponent
             'tableId' => null,
             'remoteUrl' => null,
             'stimulusController' => $this->stimulusController,
+            'backend' => $this->backend,
             'search' => true,
+            'info' => false,
+            'useDatatables' => true,
+            'trans' => true,
+            'tableClasses' => '',
+            'scrollY' => '70vh',
             'condition' => true,
             'caller' => null,
             'columns' => [],
         ]);
+        $resolver->setAllowedValues('backend', ['simple', 'ux']);
         $parameters = $resolver->resolve($parameters);
 //        dd($parameters);
         return $parameters;
+    }
+
+    /** Options for upstream's client-side controller; rows come from the rendered DOM. */
+    public function getUxOptions(): array
+    {
+        $options = [
+            'serverSide' => false,
+            'searching' => $this->search,
+            'info' => $this->info,
+            'pageLength' => $this->perPage,
+            'scrollY' => $this->scrollY,
+            'mutationsEnabled' => false,
+        ];
+
+        if ($this->remoteUrl) {
+            $columns = array_values(iterator_to_array($this->normalizedColumns()));
+            if ($columns === []) {
+                throw new \LogicException('The ux backend requires explicit columns for remoteUrl.');
+            }
+            $options['ajax'] = ['url' => $this->remoteUrl, 'dataSrc' => ''];
+            $options['columns'] = array_map(static fn (Column $column): array => [
+                'name' => $column->name,
+                'data' => $column->name,
+                'title' => $column->title,
+                'defaultContent' => '',
+            ], $columns);
+        }
+
+        return $options;
     }
 
     /**
@@ -63,6 +102,12 @@ class SimpleDatatablesComponent
         $normalizedColumns = [];
         foreach ($this->columns as $c) {
             if (empty($c)) {
+                continue;
+            }
+            if ($c instanceof Column) {
+                if ($c->condition) {
+                    $normalizedColumns[$c->name] = $c;
+                }
                 continue;
             }
             if (is_string($c)) {

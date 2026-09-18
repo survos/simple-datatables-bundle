@@ -1,42 +1,23 @@
-{# templates/components/grid.html.twig #}
-{% if remoteUrl %}
-<table {{ this.tableId ? 'id="%s"'|format(this.tableId)|raw }}
-
-        {{ this.stimulusController ? stimulus_controller(this.stimulusController, {
-            useDatatables: this.useDatatables,
-            search: this.search,
-            perPage: this.perPage,
-            scrollY: this.scrollY,
-            data: [],
-            remoteUrl: this.remoteUrl,
-            columns: this.columns,
-        }) }}
-        class="table table table-striped responsivexx {{ this.tableClasses }}"
-        {{ this.stimulusController ? stimulus_target(this.stimulusController, 'table') }}>
-</table>
-
-{% elseif condition %}
+{% if this.condition %}
     {% set columns = this.normalizedColumns %}
-        {# <table class="table"> #}
-        <table {{ this.tableId ? 'id="%s"'|format(this.tableId)|raw }}
-                class="table table table-striped responsivexx {{ this.tableClasses }}"
-
-                {{ this.stimulusController ? stimulus_controller(this.stimulusController, {
-                    useDatatables: this.useDatatables,
-                    search: this.search,
-                    perPage: this.perPage,
-                    scrollY: this.scrollY,
-                    data: this.data,
-                    columns: this.columns,
-                    dom: this.dom,
-                    info: this.info,
-                }) }}
-                {# the target! #}
-                {{ this.stimulusController ? stimulus_target(this.stimulusController, 'table') }}>
+    {% set controller = this.backend == 'ux'
+        ? survos_stimulus('simple-datatables-bundle', 'ux')
+        : this.stimulusController %}
+    {% set values = this.backend == 'ux' ? {view: this.uxOptions} : {
+        search: this.search,
+        perPage: this.perPage,
+        remoteUrl: this.remoteUrl,
+        columns: this.columns,
+        info: this.info,
+    } %}
+    <table {% if this.tableId %}id="{{ this.tableId }}"{% endif %}
+        class="table table-striped {{ this.tableClasses }}"
+        {% if this.useDatatables and controller %}{{ stimulus_controller(controller, values) }}{% endif %}>
+        {% if not this.remoteUrl %}
             <thead>
             <tr>
                 {% for c in columns %}
-                    <th class="
+                    <th data-column-name="{{ c.name }}" class="
                         {{ c.inSearchPane ? 'in-search-pane' }}
                         "
                     >
@@ -46,16 +27,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for idx, row in data %}
+            {% for idx, row in this.data %}
                 <tr class="align-top">
                     {% for c in columns %}
                     <td>
-
-                        {#                {% if c.templateName and block(c.templateName) is defined %} #}
-                        {#                {% endif %} #}
-
-                        {# use a different template than the name.  We need common templates. #}
-                        {% set templateName = c.twigTemplate|default(c.name) %}
+                        {% set templateName = c.block|default(c.twigTemplate)|default(c.name) %}
 
                         {% if block(templateName) is defined %}
                             {% with {field_name: c.name, row: row, idx: idx, column: c, c:c } %}
@@ -80,18 +56,13 @@
                                 {{ label }}
                             {% endif %}
                         {% endif %}
-                        {#                    {% set _block = block(c)|default(false) %} #}
-                        {#                    {% if _block is not empty %} #}
-                        {#                        {{ _block|raw }} #}
-                        {#                    {% else %} #}
-                        {#                        {{ attribute(row, c) }} #}
-                        {#                    {% endif %} #}
 
-                        {% endfor %}
                     </td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
             </tbody>
 
-        </table>
+        {% endif %}
+    </table>
 {% endif %}
