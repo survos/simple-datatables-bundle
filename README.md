@@ -4,7 +4,7 @@ Integrates the Simple Datatables library (https://github.com/fiduswriter/simple-
 
 ## Migrating to Grid Bundle
 
-Simple Datatables remains supported and is appropriate when a lighter table library meets the application’s needs. It is not deprecated. For Survos applications that benefit from a shared API Grid foundation, prefer `survos/grid-bundle` for local tables and `survos/api-grid-bundle` for API-backed pagination and filtering. Grid is heavier than simple-datatables, but gives both paths one DataTables implementation and Bootstrap 5 / Tabler theme. Optional extensions load lazily. This guide describes an explicit application migration; installing Grid does not automatically replace existing components.
+Simple Datatables remains supported and is appropriate when a lighter table library meets the application’s needs. It is not deprecated. If an application already uses `survos/api-grid-bundle`, use `survos/grid-bundle` for its fast in-memory tables: the shared Grid dependency is already included. If an in-memory table is sufficient and the application does not already use API Grid, ask the application owner to choose Grid or simple-datatables before migrating. Use API Grid when API-backed pagination and filtering are required. Grid is heavier than simple-datatables, but gives both paths one DataTables implementation and Bootstrap 5 / Tabler theme. Optional extensions load lazily. This guide describes an explicit application migration; installing Grid does not automatically replace existing components.
 
 ### 1. Inventory and install
 
