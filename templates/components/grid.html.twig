@@ -1,9 +1,7 @@
 {% if this.condition %}
     {% set columns = this.normalizedColumns %}
-    {% set controller = this.backend == 'ux'
-        ? survos_stimulus('simple-datatables-bundle', 'ux')
-        : this.stimulusController %}
-    {% set values = this.backend == 'ux' ? {view: this.uxOptions} : {
+    {% set controller = this.stimulusController %}
+    {% set values = {
         search: this.search,
         perPage: this.perPage,
         remoteUrl: this.remoteUrl,

@@ -14,7 +14,6 @@ class SimpleDatatablesComponent
 {
     public function __construct(
         public string $stimulusController,
-        public string $backend = 'simple',
     )
     {
     }
@@ -48,7 +47,6 @@ class SimpleDatatablesComponent
             'tableId' => null,
             'remoteUrl' => null,
             'stimulusController' => $this->stimulusController,
-            'backend' => $this->backend,
             'search' => true,
             'info' => false,
             'useDatatables' => true,
@@ -59,39 +57,9 @@ class SimpleDatatablesComponent
             'caller' => null,
             'columns' => [],
         ]);
-        $resolver->setAllowedValues('backend', ['simple', 'ux']);
         $parameters = $resolver->resolve($parameters);
 //        dd($parameters);
         return $parameters;
-    }
-
-    /** Options for upstream's client-side controller; rows come from the rendered DOM. */
-    public function getUxOptions(): array
-    {
-        $options = [
-            'serverSide' => false,
-            'searching' => $this->search,
-            'info' => $this->info,
-            'pageLength' => $this->perPage,
-            'scrollY' => $this->scrollY,
-            'mutationsEnabled' => false,
-        ];
-
-        if ($this->remoteUrl) {
-            $columns = array_values(iterator_to_array($this->normalizedColumns()));
-            if ($columns === []) {
-                throw new \LogicException('The ux backend requires explicit columns for remoteUrl.');
-            }
-            $options['ajax'] = ['url' => $this->remoteUrl, 'dataSrc' => ''];
-            $options['columns'] = array_map(static fn (Column $column): array => [
-                'name' => $column->name,
-                'data' => $column->name,
-                'title' => $column->title,
-                'defaultContent' => '',
-            ], $columns);
-        }
-
-        return $options;
     }
 
     /**

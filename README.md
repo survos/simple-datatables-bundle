@@ -103,65 +103,6 @@ composer remove survos/simple-datatables-bundle
 
 A transitive consumer such as `survos/folio-bundle` may still require the old bundle. Migrate that consumer first; do not force removal. Remove direct Pentiminax requirements only after its own call sites are migrated. Inspect recipe cleanup and remove unused legacy bundle configuration, routes, controller registrations and importmap pins only when no remaining consumer needs them. Keep this cleanup scoped to the application being migrated.
 
-## UX DataTables backend (opt-in)
-
-The bundle also includes a client-side backend using `pentiminax/ux-datatables` 1.x.
-Existing tables keep the Simple DataTables backend unless selected explicitly:
-
-```twig
-<twig:simple_datatables backend="ux" :data="products" :columns="['name', 'price']" perPage="10">
-    <twig:block name="price">
-        <strong>${{ row.price|number_format(2) }}</strong>
-    </twig:block>
-</twig:simple_datatables>
-```
-
-Or select it for all components:
-
-```yaml
-survos_simple_datatables:
-    backend: ux
-```
-
-Cells and column blocks are rendered by PHP Twig, not js-twig or twig-browser.
-The small `ux` controller captures that HTML before delegating initialization,
-sorting, searching, paging, and Turbo lifecycle handling to UX DataTables. It
-persists the complete dataset for reconnects rather than recapturing the visible
-page. No API Platform resource or per-table PHP class is required.
-
-For `remoteUrl`, supply explicit named columns and an endpoint returning a JSON
-array of objects. It is fetched once for client-side processing. Server-rendered
-column blocks apply to local `data` only; remote column blocks, facets, and API
-Platform processing are outside this backend's current scope. `simple_item_grid`
-remains a separate definition-list component.
-
-When upgrading an existing application, update Composer dependencies so
-`Pentiminax\\UX\\DataTables\\PentiminaxDataTablesBundle` is installed and enabled.
-Let its Symfony UX recipe register its assets. Also refresh this bundle's
-controller registration: the canonical package key is now
-`@survos/simple-datatables-bundle`, with `table` and `ux` controllers. Update any
-old `@survos/simple-datatables` controller/style references accordingly. The `ux`
-controller imports the upstream AssetMapper module
-`@pentiminax/ux-datatables/controller.js`. Register that local module in existing
-AssetMapper applications:
-
-```bash
-php bin/console importmap:require '@pentiminax/ux-datatables/controller.js' --path='./vendor/pentiminax/ux-datatables/assets/dist/controller.js'
-```
-
-With UX DataTables 1.0, check that its recipe uses the bundle class
-`Pentiminax\UX\DataTables\PentiminaxDataTablesBundle` and route resource
-`@PentiminaxDataTablesBundle/config/routes.php`; an older contributed recipe
-still uses `DataTablesBundle`.
-
-This preserves the existing component API as a migration layer. A focused
-upstream contribution would add existing-HTML-table support and then a lightweight
-Twig component, without requiring Survos or FieldBundle.
-
-```bash
-composer req survos/simple-datatables-bundle
-```
-
 ## Stimulus Controller (Tables)
 
 To turn any HTML `<table>` into a datatable, simply add the stimulus controller to the tag:

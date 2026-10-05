@@ -13,12 +13,6 @@
         "autoimport": {
           "@survos/simple-datatables-bundle/style.css": true
         }
-      },
-      "ux": {
-        "main": "src/controllers/ux_controller.js",
-        "webpackMode": "eager",
-        "fetch": "lazy",
-        "enabled": true
       }
     },
     "importmap": {

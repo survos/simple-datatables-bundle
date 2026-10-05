@@ -41,7 +41,6 @@ class SurvosSimpleDatatablesBundle extends AbstractUxBundle
             ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setArgument('$stimulusController', $config['stimulus_controller'])
-            ->setArgument('$backend', $config['backend'])
 //            ->setArgument('$registry', new Reference('doctrine')) // should be optional
         ;
 
@@ -56,7 +55,6 @@ class SurvosSimpleDatatablesBundle extends AbstractUxBundle
         // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
-            ->enumNode('backend')->values(['simple', 'ux'])->defaultValue('simple')->end()
             ->scalarNode('stimulus_controller')->defaultValue('@survos/simple-datatables-bundle/table')->end()
             ->integerNode('per_page')->min(1)->defaultValue(10)->end()
             ->booleanNode('searchable')->defaultValue(true)->end()
