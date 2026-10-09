@@ -20,7 +20,8 @@ class ItemGridComponent
 
     public array $columns=[];
     public array|string $exclude;
-    public ?string $stimulusController = '@survos/grid/item_grid';
+    // No bundle ships an item-grid controller; the old '@survos/grid/item_grid' default never mounted.
+    public ?string $stimulusController = null;
 
     #[PreMount]
     public function preMount(array $parameters = []): array
